@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import { contrast } from "./Colors";
+import { colorLink, contrast } from "./Colors";
 
 export const Form = styled.form`
+    .save {
+        background-color: ${colorLink};
+    }
     .inputsForm {
         width: 100%;
         display: flex;
@@ -45,6 +48,8 @@ export const Form = styled.form`
             border: none;
             padding: 8px;
         }
+
+        
         .error {
             border: 1px solid red !important;
             ::placeholder {
