@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { Div, Form, Section } from '../../styles'
 import { Input, MenuIn, Select } from '../components'
 
