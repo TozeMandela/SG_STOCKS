@@ -1,7 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardDash } from '../components';
+import { IdataProps, request } from '../../api/Axios';
+import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 export const Dashboard: React.FC = () => {
+  const [recentData, setRecentData] = useState<IdataProps[]>();
+  const [acabandoItems, setAcabandoItems] = useState<IdataProps[]>();
+  const [diversidade, setDiversidade] = useState(0)
+  const [Total, setTotal] = useState(0)
+
+  useEffect(() => {
+    request._get('/products').then(data => {
+      if(data instanceof Error) {
+        console.log(data.message);
+      }else {
+
+        setDiversidade(data?.length ?? 0);
+        const total = data?.reduce((ac, item)=>{
+          return ac + item.amount;
+        }, 0);
+        
+        setTotal(total ?? 0);
+        const day = dayjs();
+        const rec = data?.filter(el => day.diff(el.updatedAt, 'day') <= 10 )
+        const aca = data?.filter(el => el.amount < 10 )
+        
+        setAcabandoItems(aca!)
+        setRecentData(rec!);                
+      }
+    });
+  }, []);
+
   return (
     <main className='mainDash'>
         <div className="containerDash">
@@ -10,10 +40,10 @@ export const Dashboard: React.FC = () => {
             </div>
 
             <section className="cardsDash">
-                <CardDash class='cardOne' title='Diversidade de itens' amount='2' />
-                <CardDash class='cardTwo' title='Inventario total' amount='5' />
-                <CardDash class='cardTree' title='Itens recente' amount='3' />
-                <CardDash class='cardFor' title='Itens Acabado' amount='7' />
+                <CardDash class='cardOne' title='Diversidade de itens' amount={diversidade} />
+                <CardDash class='cardTwo' title='Inventario total' amount={Total} />
+                <CardDash class='cardTree' title='Itens recente' amount={recentData?.length} />
+                <CardDash class='cardFor' title='Itens Acabado' amount={acabandoItems?.length} />
                 <div className="information">
                   <aside className='recent-item'>
                     <div className="containerTable">
@@ -28,15 +58,17 @@ export const Dashboard: React.FC = () => {
                             </th>
                           </tr>
                         </thead>
-                        <tbody className="tbody">
-                          <tr>
-                            <td>Window</td>
-                            <td>Window</td>
-                          </tr>
-                          <tr>
-                            <td>Window</td>
-                            <td>Window</td>
-                          </tr>
+                        <tbody className="tbody" key='recentTbody'>
+                          {recentData && recentData.map((el) => (
+                            <tr key={el.id}>
+                              <td>
+                                {el.name}
+                              </td>
+                              <td>
+                                <Link to={`#${el.id}`} className='seemore' >Ver...</Link>
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
@@ -57,17 +89,17 @@ export const Dashboard: React.FC = () => {
                             </th>
                           </tr>
                         </thead>
-                        <tbody className="tbody">
-                          <tr>
-                            <td>Window</td>
-                            <td>7</td>
-                            <td>Window</td>
-                          </tr>
-                          <tr>
-                            <td>Window</td>
-                            <td>6</td>
-                            <td>Window</td>
-                          </tr>
+                        <tbody className="tbody" key='acabadotbody'>
+                        {acabandoItems && acabandoItems.map((el) => (
+                            <tr key={el.id}>
+                              <td>
+                                {el.name}
+                              </td>
+                              <td>
+                                <Link to={`#${el.id}`} className='seemore' >Ver...</Link>
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
