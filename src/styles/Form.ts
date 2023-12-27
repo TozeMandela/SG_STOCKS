@@ -2,19 +2,18 @@ import styled from "styled-components";
 import { contrast } from "./Colors";
 
 export const Form = styled.form`
-        border: 1px solid;
     .inputsForm {
         width: 100%;
         display: flex;
-        gap: 8px 15px;
+        gap: 8px 5px;
         flex-wrap: wrap;
         flex-direction: column;
-        border: 1px solid;
 
+    
         article {
             width: 100%;
             display: flex;
-            gap: 8px 15px;
+            gap: 5px 3px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -24,7 +23,7 @@ export const Form = styled.form`
             flex-direction: column;
         }
         .inputArea textarea {
-            width: 81.5%;
+            width: 99.5%;
             background-color: ${contrast};
             resize: none;
             margin: auto;
@@ -32,19 +31,32 @@ export const Form = styled.form`
             height: 200px;
             padding: 10px;
             font-size: 14px;
+            margin-bottom: 10px;
         }
         div label p {
             font-size: 14px;
             margin-bottom: 7px;
         }
-
+        
         div input, div select {
             background-color: ${contrast};
             height: 40px;
-            width: 260px;
+            width: 240px;
             border: none;
             padding: 8px;
         }
+        .error {
+            border: 1px solid red !important;
+            ::placeholder {
+                color: red !important;
+            }
+        }
     }
 
+`;
+
+export const Div = styled.div`
+        max-width: 1000px;
+        margin: auto;
+        padding: 13px;
 `;

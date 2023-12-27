@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface IpropsInput {
     id?: string,
@@ -13,6 +13,7 @@ interface IpropsInput {
 
 
 export const Input: React.FC<IpropsInput> = ({id, setValue, value, Class, name, placeholder, forLabel, type}) => {
+ 
   return (
     <label htmlFor={id}>
         <p>{forLabel}</p>
@@ -22,7 +23,7 @@ export const Input: React.FC<IpropsInput> = ({id, setValue, value, Class, name, 
             name={name} 
             value={value} 
             onChange={(evt) => setValue(evt.target.value)} 
-            className={Class} 
+            className={value === '' ? `${Class} error`:`${Class}`} 
             placeholder={placeholder}/>
     </label>
   )
