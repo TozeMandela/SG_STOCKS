@@ -3,6 +3,7 @@ import { CardDash } from '../components';
 import { IdataProps, request } from '../../api/Axios';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { dataReverse } from '../others/reverseData';
 
 export const Dashboard: React.FC = () => {
   const [recentData, setRecentData] = useState<IdataProps[]>();
@@ -23,9 +24,9 @@ export const Dashboard: React.FC = () => {
         
         setTotal(total ?? 0);
         const day = dayjs();
-        const rec = data?.filter(el => day.diff(el.updatedAt, 'day') <= 10 )
+        const rec = data?.filter(el => day.diff(dataReverse(el.updatedAt!), 'day') <= 10 )
         const aca = data?.filter(el => el.amount < 10 )
-        
+       
         setAcabandoItems(aca!)
         setRecentData(rec!);                
       }

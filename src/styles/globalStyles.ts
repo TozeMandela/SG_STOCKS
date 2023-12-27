@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { background, colorTextOne, contrast } from "./Colors";
+import { background, colorLink, colorTextOne, colorTextTwo, contrast } from "./Colors";
 
 export const GlobalStyled = createGlobalStyle`
    :root {
@@ -133,6 +133,28 @@ export const GlobalStyled = createGlobalStyle`
     .table .thead tr th {
       text-align: left;
       font-weight: 400;
+    }
+
+    .accoes a{
+        margin: 4px;
+        padding: 6px;
+        color: ${colorTextOne};
+        border-radius: 10px;
+
+        &:nth-child(1) {
+          background-color: ${colorLink};
+        }
+        &:nth-child(2) {
+          background-color: ${colorTextTwo};
+        }
+        &:nth-child(3) {
+          background-color: red;
+        }
+
+        &:hover {
+          color: ${contrast};
+        }
+
     }
 
 @media (max-width: 810px) {

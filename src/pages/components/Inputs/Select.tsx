@@ -2,7 +2,7 @@ import React from 'react'
 
 interface IpropsInput {
     id?: string,
-    Option: Array<string>,
+    Option: Array<{id: string, title: string}>,
     forLabel?: string,
     Class?: string,
     name?: string,
@@ -22,7 +22,7 @@ export const Select: React.FC<IpropsInput> = ({id, setValue, value, Class, name,
           onChange={(evt) => setValue(evt.currentTarget.value)} 
           className={Class}>
               {Option && Option.map((op, id) => (
-                <option key={id} value = {op}> {op} </option>
+                <option key={id} value = {op.id}> {op.title} </option>
               ))}
         </select>
     </label>

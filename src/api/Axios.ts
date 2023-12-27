@@ -7,7 +7,6 @@ const Axios = axios.create({
 });
 
 export interface IdataProps { 
-    id?: number
     name: string,
     categoriaId: number,
     amount: number,
@@ -16,6 +15,8 @@ export interface IdataProps {
     description: string, 
     createdAt?: string,
     updatedAt?: string
+    id?: number|string,
+    title?: string,
 }
 
 
@@ -30,8 +31,13 @@ const _get = async (path: string): Promise<IdataProps[]| ErrorRequest | undefine
 const _put = () => {
 
 }
-const _post = () => {
-
+const _post = async (path: string, obj: IdataProps) => {
+    try {
+        const { data } = await Axios.post(path, obj);
+        return data;
+    } catch (error) {
+        if (error instanceof Error) return new ErrorRequest('erro ao buscar');
+    }
 }
 const _del = () => {
 
