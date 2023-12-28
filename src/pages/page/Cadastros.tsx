@@ -46,7 +46,7 @@ export const Cadastros: React.FC = () => {
       categoriaId: Number(item.category),
       amount: Number(item.amount),
       price: Number(item.price),
-      moedaId: 'Akz',
+      moedaId: '1',
       description: item.description, 
       createdAt: dayjs().format('DD/MM/YYYY'),
       updatedAt:  dayjs().format('DD/MM/YYYY')
