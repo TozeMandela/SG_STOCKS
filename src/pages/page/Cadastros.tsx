@@ -5,7 +5,6 @@ import { IdataProps, request } from '../../api/Axios';
 import dayjs from 'dayjs';
 import { ErrorRequest } from '../../Errors/Error';
 
-
 interface IFormProps {
   name: string,
   amount: string,
@@ -16,39 +15,30 @@ interface IFormProps {
   [key: string]: number | string;
 }
 
-
 export const Cadastros: React.FC = () => {
   const [item, setItem] = useState<IFormProps>({name: '', amount: '', category: '', price: '', description: ''});
   const [category, setCategory] = useState<IdataProps[]>([]);
-
 
   useEffect(() => {
     request._get('/categories').then(data => {
       if(data instanceof Error) {
         console.log(data.message);
-      }else {
-        console.log(data);
-        
+      }else {   
         setCategory(data!); 
       }
     });
   }, []);
 
-
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     let isOk: boolean = false;
-    console.log('aaaaaaaaaaaa');
     
     for (const i in item) {
       // eslint-disable-next-line no-constant-condition
       if (i === 'name' || i ==='amount' || i === 'price' || 'category') {
         if(!item[i]) {isOk=true}
-      }
-      console.log(item[i], isOk, i);
-      
-    }
-    
+      }      
+    } 
     if(isOk) return console.log('campos obrigatorios não preenchidos');
 
     const obj: IdataProps = {
@@ -61,18 +51,17 @@ export const Cadastros: React.FC = () => {
       createdAt: dayjs().format('DD/MM/YYYY'),
       updatedAt:  dayjs().format('DD/MM/YYYY')
     }
-    console.log('bbbbbbbbbbbb');
     
     request._post('/products', obj).then((data) => {
       if(data instanceof ErrorRequest) {
         console.log(data.message);
       }else {
         console.log(data);
+        setItem({name: '', amount: '', category: '', price: '', description: ''});
       }
     })
 
   }
-
 
   return (
     <>

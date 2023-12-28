@@ -2,24 +2,44 @@ import React, { useEffect, useState } from 'react'
 import { Section } from '../../styles/Home'
 import { MenuIn } from '../components';
 import { IdataProps, request } from '../../api/Axios';
-import { Link } from 'react-router-dom';
-
-
 
 export const Home: React.FC = () => {
-  const [items, setItems] = useState<IdataProps[]>();
-
+  const [items, setItems] = useState<IdataProps[]>([]);
 
   useEffect(() => {
     request._get('/products').then(data => {
       if(data instanceof Error) {
         console.log(data.message);
       }else {
-        setItems(data); 
+        setItems(data!); 
       }
     });
   }, []);
 
+  const handleSee = () => {
+    console.log('bbbbbbbbb');
+
+  }
+  const handleUpdate = () => {
+    console.log('aaaaaa');
+    
+  }
+  const handleDelete = () => {
+    const $a = document.querySelector('.del')!;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const id: any = $a;
+    const num = id.dataset.id;
+    console.log(num);
+    
+    request._del(`/products/${num}`).then(data => {
+      if(data instanceof Error) {
+        console.log(data.message);
+      }else {
+        console.log('eliminado com sucesso!');
+        window.location.reload();
+      }
+    });
+  }
 
   return (
     <Section>
@@ -62,9 +82,9 @@ export const Home: React.FC = () => {
                 </td>
                 <td>
                   <div className="accoes">
-                    <Link to={`#${el.id}`} className='seemore' >Ver...</Link>
-                    <Link to={`#${el.id}`} className='seemore' >actualizar</Link>
-                    <Link to={`#${el.id}`} className='seemore' >excluir</Link>
+                    <button data-id={el.id} onClick={handleSee} className='seemore' >Ver...</button>
+                    <button data-id={el.id} onClick={handleUpdate} className='seemore' >actualizar</button>
+                    <button data-id={el.id} onClick={handleDelete} className='del' >excluir</button>
                   </div>
                 </td>
               </tr>

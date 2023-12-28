@@ -36,11 +36,16 @@ const _post = async (path: string, obj: IdataProps) => {
         const { data } = await Axios.post(path, obj);
         return data;
     } catch (error) {
-        if (error instanceof Error) return new ErrorRequest('erro ao buscar');
+        if (error instanceof Error) return new ErrorRequest('erro ao guardar');
     }
 }
-const _del = () => {
-
+const _del = async (path: string) => {
+    try {
+        const { data } = await Axios.delete(path);
+        return data;
+    } catch (error) {
+        if (error instanceof Error) return new ErrorRequest('erro ao remover');
+    }
 }
 
 export const request = {

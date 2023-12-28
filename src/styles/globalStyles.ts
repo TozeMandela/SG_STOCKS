@@ -135,12 +135,12 @@ export const GlobalStyled = createGlobalStyle`
       font-weight: 400;
     }
 
-    .accoes a{
+    .accoes button{
         margin: 4px;
         padding: 6px;
         color: ${colorTextOne};
         border-radius: 10px;
-
+        cursor: pointer;
         &:nth-child(1) {
           background-color: ${colorLink};
         }
